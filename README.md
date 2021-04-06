@@ -1,2 +1,3 @@
-# authentication-server
-System for authenticate and verify auth tokens
+# Autentication Server
+
+npm start
