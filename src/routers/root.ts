@@ -12,9 +12,8 @@ const router = Router()
  */
 router.get( '/', ( req: Request, res: Response, next: NextFunction ) => {
 
-  res.writeHead( permanentRedirect.status, {
-    Location: '/healthcheck'
-  } ).end()
+    return res.redirect( permanentRedirect.status, '/healthcheck' )
+
 } )
 
 export { router as rootRouter }

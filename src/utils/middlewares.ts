@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
-import { findErrorByStatus, notFound, createHttpStatus, HttpStatusResponse, serviceUnavailable } from './httpStatus'
+import { isTokenValid } from './cryptUtil'
+import { findErrorByStatus, notFound, createHttpStatus, HttpStatusResponse, unauthorized } from './httpStatus'
 import { logger, log } from './loggerUtil'
 
 /**
@@ -17,16 +18,16 @@ export const errorMiddleware = ( error: HttpStatusResponse, req: Request, res: R
 
     res.statusMessage = error.message
 
-    log( res.statusMessage, 'event', 'Error Middleware', 'error' )
+    log( res.statusMessage, 'EVENT', 'Error Middleware', 'ERROR' )
 
     try {
         return res
             .status( error.status )
-            .send( createHttpStatus( findErrorByStatus( error.status ), error.message ) )
+            .send( error )
 
     } catch ( error ) {
         console.error( error.message )
-        log( error.message, 'event', 'Error Middleware', 'critical' )
+        log( error.message, 'EVENT', 'Error Middleware', 'CRITICAL' )
     }
 }
 
@@ -53,13 +54,15 @@ export const corsMiddleware = ( req: Request, res: Response, next: NextFunction 
  * Middleware to handle authorization
  */
 export const authMiddleware = async ( req: Request, res: Response, next: NextFunction ) => {
+
     // get token from request header Authorization
-    // const token = req.headers.authorization
+    const token = req.headers.authorization
 
     // TODO
     // Token verification
     // Catch the JWT Expired or Invalid errors
-    // return res.status( 401 ).send( { msg: err.message } )
+    if ( !isTokenValid( token ) )
+        next( createHttpStatus( unauthorized ) )
 
     // Call next middleware
     next()
@@ -72,7 +75,7 @@ export const loggerRequest = logger( 'from :remote-addr - :method :url HTTP/:htt
     immediate: true,
     stream: {
         write: ( message: string ) => {
-            log( message.trim(), 'request' )
+            log( message.trim(), 'REQUEST' )
         }
     }
 } )
@@ -83,7 +86,7 @@ export const loggerRequest = logger( 'from :remote-addr - :method :url HTTP/:htt
 export const loggerResponse = logger( 'to :remote-addr - STATUS :status in :response-time ms', {
     stream: {
         write: ( message: string ) => {
-            log( message.trim(), 'response' )
+            log( message.trim(), 'RESPONSE' )
         }
     }
 } )

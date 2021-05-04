@@ -2,7 +2,7 @@ import 'jest'
 
 describe( 'Teste', () => {
 
-    it( 'Test ...', async ( done ) => {
+    it.skip( 'Test ...', async ( done ) => {
 
         const expected = true
 

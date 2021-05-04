@@ -14,6 +14,7 @@ type HttpStatusCode =
     204 |
     301 |
     302 |
+    308 |
     400 |
     401 |
     403 |
@@ -74,7 +75,7 @@ export const found: HttpStatus = { status: 302, message: 'Found' }
 /**
  *  HttpStatus Permanent Redirect
  */
-export const permanentRedirect: HttpStatus = { status: 302, message: 'Permanent Redirect' }
+export const permanentRedirect: HttpStatus = { status: 308, message: 'Permanent Redirect' }
 
 /**
  * HttpStatus Bad Request
@@ -125,7 +126,7 @@ export const serviceUnavailable: HttpStatus = { status: 508, message: 'Service U
  * Interface HttpStatusResponse
  */
 export interface HttpStatusResponse extends HttpStatus {
-    errors?: AppError[]
+    errors?: AppError | AppError[]
 }
 
 /**
@@ -135,10 +136,10 @@ export interface HttpStatusResponse extends HttpStatus {
  * @param error 
  * @param message 
  */
-export const createHttpStatus = ( httpStatus: HttpStatus, message?: string, errors?: AppError[] ) => {
+export const createHttpStatus = ( httpStatus: HttpStatus, errors?: AppError | AppError[] ) => {
     const newError: HttpStatusResponse = {
         status: httpStatus.status,
-        message: message ? message : httpStatus.message,
+        message: httpStatus.message,
         errors
     }
 

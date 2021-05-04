@@ -4,7 +4,7 @@
   "rules": {
     "max-line-length": {
       "options": [
-        120
+        140
       ]
     },
     "semicolon": [
@@ -14,7 +14,6 @@
     ],
     "new-parens": true,
     "no-arg": true,
-    "no-bitwise": true,
     "no-conditional-assignment": true,
     "no-consecutive-blank-lines": false,
     "no-console": false // Dev Only

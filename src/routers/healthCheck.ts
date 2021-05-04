@@ -11,12 +11,13 @@ const router = Router()
  * GET -> verifica se o sistema está ativo respondendo com o tempo desde o último start 
  */
 router.get( '/', ( req: Request, res: Response, next: NextFunction ) => {
-  res
-    .status( ok.status )
-    .send( {
-      name: 'MY APP',
-      uptime: process.uptime()
-    } )
+
+    return res
+        .status( ok.status )
+        .send( {
+            name: 'MY APP',
+            uptime: process.uptime()
+        } )
 } )
 
 export { router as healthCheckRouter }

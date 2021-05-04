@@ -1,14 +1,14 @@
 //
-//      Interface Client
+//      Logger Interface
 //
 
-// Define quais os tipos de log
-export type LoggerType = 'request' | 'response' | 'event'
+// Log Types
+export type LoggerType = 'REQUEST' | 'RESPONSE' | 'EVENT'
 
-// Define qual severidade do log
-export type SeverityType = 'info' | 'warn' | 'error' | 'critical'
+// Log Severity
+export type SeverityType = 'INFO' | 'WARN' | 'ERROR' | 'CRITICAL'
 
-// Define interface Logger
+// Logger Interface
 export interface Logger {
     type: LoggerType
     severity: SeverityType

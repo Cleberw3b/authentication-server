@@ -1,7 +1,7 @@
 import logger from 'morgan'
 import { LoggerType, Logger, SeverityType } from '../models/logger'
 import { ENABLE_LOG } from './consts'
-import { nowForPostgre, nowIsoDate } from './util'
+import { fillString, nowForPostgre, nowIsoDate } from './util'
 
 /**
  * Função responsável por criar e salvar logs
@@ -13,29 +13,26 @@ import { nowForPostgre, nowIsoDate } from './util'
 export const log = (
     message: string,
     type: LoggerType,
-    service: string = 'vpp-aviso',
-    severity: SeverityType = 'info'
+    service: string = 'Authentication Service',
+    severity: SeverityType = 'INFO'
 ) => {
 
     const timestamp = nowForPostgre()
 
+    if ( type === 'REQUEST' || type === 'RESPONSE' ) service = ''
+
     const log: Logger = { type, severity, service, timestamp, message }
 
     if ( ENABLE_LOG ) printLogger( log )
-
-    // saveLog( log )
-
 }
 
 const loggerToString = ( log: Logger ) => {
 
-    const severity = log.severity.toUpperCase()
     const time = nowIsoDate()
-    const type = log.type.toUpperCase()
-    const service = log.service
-    const message = log.message
 
-    return `${ severity } - ${ time } -  ${ type } - ${ service } - ${ message }`
+    const { severity, type, service, message } = log
+
+    return `${ fillString( severity, ' ', 8 ) } - ${ time } - ${ fillString( type, ' ', 8 ) } - ${ service } - ${ message }`
 
 }
 

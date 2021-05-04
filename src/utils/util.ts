@@ -38,6 +38,38 @@ export const formatDate = ( timestamp: number ) => {
     return year + '-' + month + '-' + day
 }
 
+
+/**
+ * Verifies whether a password is secure or not
+ * 
+ * @param password 
+ * @returns `true` or `false`
+ */
+export const isPasswordSecure = ( password: string ): boolean => {
+
+    const strongPasswordRegex = new RegExp( '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})' )
+
+    return strongPasswordRegex.test( password )
+}
+
+/**
+ * Verifies whether the email is valid or not
+ * 
+ * @param email
+ * @returns `true` or `false`
+ */
+export const isEmailValid = ( email: string ) => {
+
+    const validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
+    return validEmailRegex.test( email )
+}
+
+/**
+ * 
+ * @param offset 
+ * @returns 
+ */
 export const nowForPostgre = ( offset: number = 0 ) => {
     return new Date( Date.now() - offset ).toLocaleString()
 }
@@ -76,6 +108,26 @@ export const logAxiosError = ( error: AxiosError ) => {
     `)
 }
 
+// Not Safe
 export const prettyFormat = ( object: any ) => {
     return JSON.stringify( object, undefined, 2 )
+}
+
+export const create_UUID = () => {
+    var dt = new Date().getTime()
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, function ( c ) {
+        var r = ( dt + Math.random() * 16 ) % 16 | 0
+        dt = Math.floor( dt / 16 )
+        return ( c == 'x' ? r : ( r & 0x3 | 0x8 ) ).toString( 16 )
+    } )
+    return uuid
+}
+
+export const fillString = ( string: string, value: string, size: number ): string => {
+
+    for ( let i = string.length; i < size; i++ ) {
+        string = string + value
+    }
+
+    return string
 }

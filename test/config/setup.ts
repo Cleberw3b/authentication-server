@@ -1,7 +1,10 @@
 // setup.js
 
+import app from '../../src/expressConfig'
+import { loadDatabase } from '../../src/utils/db/mongoConnector'
+
 module.exports = async () => {
 
-    process.env.ENABLE_LOG = '1'
+    await loadDatabase( app )
 
 }

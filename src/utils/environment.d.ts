@@ -2,8 +2,6 @@
 //     Global interfaces
 //
 
-import { MongoClient } from "mongodb"
-
 /**
  * Reescreve Interface `global.NodeJS.ProcessEnv`
  */
@@ -15,9 +13,12 @@ declare global {
             MONGO_DB_NAME: string
             MONGO_ATLAS_URL: string
             ENABLE_LOG?: string
+            SECRET: string
+            CONTACT_EMAIL: string
+            EMAIL_PASSWORD: string
+            PROJECT_HOST: string
         }
         interface Global {
-            connection: MongoClient
         }
     }
 }

@@ -1,12 +1,21 @@
 import { Collection, Db } from 'mongodb'
-import { Logger } from '../../models/logger'
+import { User } from '../../models/user'
+import { ActivationToken } from '../../models/token'
 
-const LOGGER_COLLECTION = 'logger'
+const USER_COLLECTION = 'user'
+const ACTIVATION_TOKEN_COLLECTION = 'activation_token'
 
-let loggerCollection: Collection<Logger>
+let userCollection: Collection<User>
+let activationTokenCollection: Collection<ActivationToken>
 
 export const createCollections = ( database: Db ) => {
-    loggerCollection = database.collection<Logger>( LOGGER_COLLECTION )
+
+    userCollection = database.collection<User>( USER_COLLECTION )
+    activationTokenCollection = database.collection<ActivationToken>( ACTIVATION_TOKEN_COLLECTION )
+
 }
 
-export { loggerCollection }
+export {
+    userCollection,
+    activationTokenCollection,
+}

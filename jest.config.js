@@ -207,3 +207,9 @@ module.exports = {
   // Whether to use watchman for file crawling
   // watchman: true,
 }
+
+// ENVIROMENT VARIABLES DEFINITION
+
+process.env = Object.assign(process.env, {
+  ENABLE_LOG: '1'
+})
